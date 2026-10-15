@@ -1,0 +1,256 @@
+/* Colour variables */
+:root {
+    --bg: #dcdde0;
+    --bar: #cfd0d4;
+    --ink: #26282c;
+    --mut: #6a6d74;
+    --grid: #c9cbd0;
+    --card: #ececee;
+    --acc: #2f3136;
+    --btn: #e4e5e8;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px)
+}
+
+@media (prefers-color-scheme:dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #1c1d20;
+        --bar: #2a2b2f;
+        --ink: #ececee;
+        --mut: #9a9da4;
+        --grid: #323338;
+        --card: #25262a;
+        --acc: #f0f0f0;
+        --btn: #3a3b40
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: #1c1d20;
+    --bar: #2a2b2f;
+    --ink: #ececee;
+    --mut: #9a9da4;
+    --grid: #323338;
+    --card: #25262a;
+    --acc: #f0f0f0;
+    --btn: #3a3b40
+}
+
+/* Header/footer, buttons, canvas */
+html,
+body {
+    height: 100%;
+    margin: 0
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--ink);
+    font: 14px system-ui, -apple-system, Segoe UI, sans-serif;
+    overflow: hidden;
+    -webkit-user-select: none;
+    user-select: none
+}
+
+header,
+footer {
+    background: var(--bar);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px
+}
+
+header b {
+    flex: 1;
+    font-size: 15px
+}
+
+button {
+    background: var(--btn);
+    color: var(--ink);
+    border: 1px solid var(--grid);
+    border-radius: 8px;
+    padding: 8px 11px;
+    font: inherit;
+    cursor: pointer
+}
+
+button.on {
+    background: var(--acc);
+    color: var(--bg)
+}
+
+button:disabled {
+    opacity: .35;
+    cursor: default
+}
+
+button.iconbtn {
+    padding: 8px 10px
+}
+
+main {
+    flex: 1;
+    position: relative;
+    min-height: 0
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none
+}
+
+/* Toast, tutorial box, and highlight */
+#toast {
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    background: var(--acc);
+    color: var(--bg);
+    padding: 7px 12px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: .25s;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 20;
+}
+
+#tutBox {
+    position: absolute;
+    bottom: 20px;
+    left: 20%;
+    transform: translateX(-12%);
+    background: var(--acc);
+    color: var(--bg);
+    padding: 12px 20px;
+    border-radius: 10px;
+    z-index: 9000;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    text-align: center;
+    font-weight: 500;
+    pointer-events: none;
+    white-space: pre-wrap;
+    max-width: 90%;
+}
+
+.tut-glow {
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--acc) !important;
+    animation: tutPulse 1.5s infinite;
+    z-index: 99;
+    position: relative;
+}
+@keyframes tutPulse {
+    0% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--acc); }
+    50% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 8px var(--acc); }
+    100% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--acc); }
+}
+
+/* Menu, bottom sheet, palette, modals */
+#menu {
+    position: absolute;
+    right: 8px;
+    top: 48px;
+    background: var(--bar);
+    border: 1px solid var(--grid);
+    border-radius: 10px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 5
+}
+
+#sheet {
+    background: var(--bar);
+    padding: 8px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    border-top: 1px solid var(--grid)
+}
+
+#sheet input,
+.card input[type=text],
+textarea {
+    background: var(--card);
+    color: var(--ink);
+    border: 1px solid var(--grid);
+    border-radius: 8px;
+    padding: 7px;
+    font: inherit;
+    user-select: text
+}
+
+#pal {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    flex: 1
+}
+
+#pal button {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px
+}
+
+#pal i {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border: 1px solid #2a2c30;
+    display: inline-block
+}
+
+body[data-m=view] #pal {
+    display: none
+}
+
+#modal {
+    position: fixed;
+    inset: 0;
+    background: #0007;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+    padding: 16px
+}
+
+.card {
+    background: var(--bar);
+    border-radius: 14px;
+    padding: 14px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+textarea {
+    height: 130px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 12px
+}
+
+.row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap
+}
+
+[hidden] {
+    display: none !important
+}
